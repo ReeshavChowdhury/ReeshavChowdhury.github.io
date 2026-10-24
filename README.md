@@ -5,6 +5,7 @@ Personal research and writing website focused on AI, privacy, security, blockcha
 - Website: https://reeshavchowdhury.github.io/
 - Blog: https://reeshavchowdhury.github.io/blog/
 - FHE article: https://reeshavchowdhury.github.io/blog/fully-homomorphic-encryption/
+- Microsoft SEAL encrypted computing demo: https://github.com/ReeshavChowdhury/seal-encrypted-computing-demo
 - Project: https://reeshavchowdhury.github.io/veynremote/
 - Hosting: GitHub Pages, `main` branch, repository root.
 
