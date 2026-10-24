@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://reeshavchowdhury.github.io/sitemap.xml

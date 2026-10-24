@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#f6f5ef"/><rect x="730" y="40" width="430" height="550" rx="28" fill="#c8edb5"/>
+<text x="65" y="95" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#5a6962">REESHAV CHOWDHURY / OPEN SOURCE</text>
+<text x="60" y="235" font-family="DejaVu Sans,sans-serif" font-size="78" font-weight="bold" letter-spacing="-4" fill="#172622">Veynremote</text>
+<text x="65" y="304" font-family="DejaVu Sans,sans-serif" font-size="33" fill="#37714d">Your desktop. A little more private.</text>
+<path d="M65 350H650" stroke="#d3dad1"/>
+<text x="65" y="405" font-family="DejaVu Sans,sans-serif" font-size="23" fill="#172622">Ubuntu screen blanking</text>
+<text x="65" y="450" font-family="DejaVu Sans,sans-serif" font-size="23" fill="#172622">Authenticator + auto-lock</text>
+<text x="65" y="550" font-family="DejaVu Sans,sans-serif" font-size="19" fill="#5a6962">Based on Veyndesk · AGPL-3.0</text>
+<rect x="765" y="160" width="310" height="205" rx="12" fill="#172622"/><rect x="776" y="171" width="288" height="183" rx="5" fill="#df9d6c"/><circle cx="840" cy="325" r="86" fill="#f7d6ab"/>
+<rect x="834" y="211" width="163" height="104" rx="5" fill="#fffefa"/><path d="M834 231H997" stroke="#d3dad1"/><path d="M855 254H917M855 272H973M855 287H957" stroke="#819b7d" stroke-width="6"/>
+<path d="M920 365V396M870 397H970" stroke="#172622" stroke-width="9"/>
+<rect x="966" y="310" width="165" height="112" rx="8" fill="#172622"/><rect x="974" y="318" width="149" height="96" rx="3" fill="#060908"/><path d="M1048 422V443M1018 444H1078" stroke="#172622" stroke-width="7"/>
+<text x="790" y="490" font-family="DejaVu Sans,sans-serif" font-size="16" fill="#1c4938">WINDOWS → UBUNTU</text>
+<text x="790" y="523" font-family="DejaVu Sans,sans-serif" font-size="13" fill="#3f5840">Full-color remote. Black physical display.</text>
+</svg>
