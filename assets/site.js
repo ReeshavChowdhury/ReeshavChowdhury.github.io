@@ -24,3 +24,22 @@ for (const button of document.querySelectorAll('[data-copy]')) {
     }
   });
 }
+// Plaintext arithmetic illustration for the FHE article; no encryption or network calls.
+const fheX = document.querySelector('#fhe-x');
+const fheY = document.querySelector('#fhe-y');
+if (fheX && fheY) {
+  const updateScore = () => {
+    const x = Number(fheX.value);
+    const y = Number(fheY.value);
+    document.querySelector('#fhe-x-value').value = String(x);
+    document.querySelector('#fhe-y-value').value = String(y);
+    document.querySelector('#fhe-result').value = String(2 * x + 3 * y);
+  };
+  fheX.addEventListener('input', updateScore);
+  fheY.addEventListener('input', updateScore);
+  updateScore();
+}
+const articleContents = document.querySelector('.article-toc');
+if (articleContents && window.matchMedia('(max-width: 760px)').matches) {
+  articleContents.open = false;
+}

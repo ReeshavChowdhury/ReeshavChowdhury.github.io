@@ -1,8 +1,10 @@
 # Reeshav Chowdhury — GitHub Pages
 
-Personal research and open-source project website, linking to [Google Scholar](https://scholar.google.com/citations?user=WjMcQ4EAAAAJ&hl=en) and featuring [Veynremote](https://github.com/ReeshavChowdhury/Veynremote).
+Personal research and writing website focused on AI, privacy, and fully homomorphic encryption. It links to [Google Scholar](https://scholar.google.com/citations?user=WjMcQ4EAAAAJ&hl=en), hosts detailed explanatory blog posts, and lists open-source work in a separate Projects section. [Veynremote](https://github.com/ReeshavChowdhury/Veynremote) is one application project, not the website’s main theme.
 
 - Website: https://reeshavchowdhury.github.io/
+- Blog: https://reeshavchowdhury.github.io/blog/
+- FHE article: https://reeshavchowdhury.github.io/blog/fully-homomorphic-encryption/
 - Project: https://reeshavchowdhury.github.io/veynremote/
 - Hosting: GitHub Pages, `main` branch, repository root.
 
@@ -16,7 +18,9 @@ The introduction uses the owner-provided [Google Scholar profile](https://schola
 
 ## Edit and preview
 
-Edit `index.html`, `veynremote/index.html`, and the files in `assets/`.
+Edit `index.html`, the pages under `blog/`, `veynremote/index.html`, and the files in `assets/`.
+The FHE article cites primary papers and official library documentation. Its interactive
+arithmetic example runs in plaintext and is explicitly not a real FHE implementation.
 Run `python3 -m http.server 8765` from the repository root and visit
 http://localhost:8765/ . Changes pushed to `main` are published by GitHub Pages.
 
