@@ -1,6 +1,6 @@
 # Reeshav Chowdhury — GitHub Pages
 
-Personal open-source project website, featuring [Veynremote](https://github.com/ReeshavChowdhury/Veynremote).
+Personal research and open-source project website, linking to [Google Scholar](https://scholar.google.com/citations?user=WjMcQ4EAAAAJ&hl=en) and featuring [Veynremote](https://github.com/ReeshavChowdhury/Veynremote).
 
 - Website: https://reeshavchowdhury.github.io/
 - Project: https://reeshavchowdhury.github.io/veynremote/
