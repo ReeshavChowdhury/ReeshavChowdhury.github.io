@@ -10,6 +10,10 @@ This is a static HTML/CSS/JavaScript site. There is no build step, analytics,
 account system, or remote desktop service hosted here. The privacy demonstration
 is an illustration, not a real remote-control session.
 
+## Profile details
+
+The introduction uses the owner-provided [Google Scholar profile](https://scholar.google.com/citations?user=WjMcQ4EAAAAJ&hl=en): affiliation **IIT Kharagpur** and research interests **AI and Privacy**. These details were checked on 2026-10-24; citation counts are not copied because they change.
+
 ## Edit and preview
 
 Edit `index.html`, `veynremote/index.html`, and the files in `assets/`.
