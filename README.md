@@ -14,7 +14,7 @@ is an illustration, not a real remote-control session.
 
 ## Profile details
 
-The introduction uses the owner-provided [Google Scholar profile](https://scholar.google.com/citations?user=WjMcQ4EAAAAJ&hl=en): affiliation **IIT Kharagpur** and research interests **AI and Privacy**. These details were checked on 2026-10-24; citation counts are not copied because they change.
+The introduction states the owner’s affiliation with **IIT Kharagpur** and research interests in **AI and Privacy**. The [Google Scholar profile](https://scholar.google.com/citations?user=WjMcQ4EAAAAJ&hl=en) is linked for academic publications and citation information.
 
 ## Edit and preview
 
