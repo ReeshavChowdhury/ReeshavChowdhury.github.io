@@ -86,3 +86,32 @@
 @media(max-width:480px){.fhe-map{padding:21px 0 25px}.fhe-map-grid>a{grid-template-columns:39px 1fr;column-gap:9px;min-height:74px;padding:9px}.fhe-map-icon{width:38px;height:38px}.fhe-map-icon svg{width:29px;height:29px}.fhe-map-grid b{font-size:11px}.fhe-map-grid small{font-size:9px}.fhe-scheme-grid{grid-template-columns:1fr}.article-body .fhe-lesson-figure{padding:10px 9px}.fhe-lesson-figure figcaption{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.fhe-map-grid>a,.fhe-map-icon svg{transition:none}.fhe-lesson-figure *{animation:none!important}.fhe-lesson-figure animateMotion{display:none}}
 .fhe-guide-prompt{margin:-10px 0 18px!important;font:13px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.fhe-guide-prompt a{color:var(--green);font-weight:600}
+
+/* The FHE guide's chapter rail stays beside the text and follows the reader. */
+.fhe-guide-layout>aside{position:sticky;top:22px;align-self:start}
+.fhe-guide-layout .article-toc{max-height:calc(100vh - 44px);overflow:hidden;padding:15px;background:#eeefe6}
+.fhe-toc-readout{display:flex;justify-content:space-between;gap:10px;margin:15px 0 7px;color:#52705b;font:10px ui-monospace,monospace}
+.fhe-toc-progress{height:2px;margin-bottom:11px;background:#d8ded3;overflow:hidden}
+.fhe-toc-progress span{display:block;width:var(--reading-progress,0%);height:100%;background:#4b865e;transition:width .24s ease}
+.fhe-guide-layout .fhe-chapter-nav{position:relative;display:flex;flex-direction:column;gap:2px;max-height:calc(100vh - 170px);margin:0;padding:0 0 0 10px;overflow:auto;scrollbar-width:thin;scrollbar-color:#b9c8b9 transparent}
+.fhe-chapter-nav:before{content:"";position:absolute;top:6px;bottom:6px;left:1px;width:1px;background:#d3dbd0}
+.fhe-chapter-nav>a{display:grid;grid-template-columns:21px minmax(0,1fr);align-items:start;gap:4px;min-height:27px;padding:5px 6px;border-radius:5px;color:#6f7e72;font:9px/1.35 ui-monospace,monospace;text-decoration:none;transition:color .2s ease,background .2s ease,transform .2s ease}
+.fhe-chapter-nav>a span{font:inherit}
+.fhe-chapter-nav>a:hover{color:#234b34;background:#e3e9df;transform:translateX(2px)}
+.fhe-chapter-nav>a.is-current{color:#204c33;background:#e2eade}
+.fhe-chapter-nav>a[aria-current="location"] span{font-weight:700}
+.fhe-toc-marker{position:absolute;z-index:2;top:0;left:0;width:3px;height:20px;border-radius:4px;background:#4b865e;box-shadow:0 0 8px rgba(75,134,94,.4);transition:transform .38s cubic-bezier(.2,.75,.25,1)}
+.fhe-key-diagram,.fhe-transform-diagram,.fhe-encoding-strip,.fhe-relin-flow,.fhe-level-ladder,.fhe-refresh-loop{display:flex;align-items:center;justify-content:center;gap:14px;margin:25px 0;padding:22px 18px;border:1px solid #344943;border-radius:15px;background:radial-gradient(ellipse at 50% 50%,#243c34,#172622);color:#e5eddf;font:12px/1.5 ui-monospace,monospace;text-align:center}
+.fhe-key-owner{display:flex;min-width:128px;flex-direction:column;align-items:center;gap:5px;padding:13px;border:1px solid #587565;border-radius:11px;background:#1d332c;animation:guide-pulse 4s ease-in-out infinite alternate}
+.fhe-key-owner b{color:#f0f4e9;font:600 13px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.fhe-key-owner small{color:#bacabd;font:10px/1.55 ui-monospace,monospace}
+.fhe-key-symbol{display:grid;place-items:center;width:36px;height:36px;border:1px solid #a1d9bf;border-radius:50%;color:#a1e5c9;font-size:23px}
+.fhe-key-server{animation-delay:-2s}.fhe-key-transfer{display:flex;flex-direction:column;align-items:center;gap:4px;color:#b8c8ba;font-size:9px}.fhe-key-transfer i,.fhe-transform-diagram>b,.fhe-encoding-strip>i,.fhe-relin-flow>i,.fhe-level-ladder>i,.fhe-refresh-loop>i{color:#e5c48d;font-size:16px;font-style:normal;animation:guide-pulse 1.8s ease-in-out infinite alternate}
+.fhe-coefficients{display:flex;gap:4px}.fhe-coefficients span{display:grid;place-items:center;width:37px;height:38px;border:1px solid #739081;border-radius:5px;background:#20382f;color:#d6e7d6;animation:guide-pulse 1.4s ease-in-out infinite alternate}.fhe-coefficients span:nth-child(2){animation-delay:-.3s}.fhe-coefficients span:nth-child(3){animation-delay:-.6s}.fhe-coefficients span:nth-child(4){animation-delay:-.9s}.fhe-polynomial{color:#d3e5d5}.fhe-ring{color:#a9e7ca;font-size:21px}
+.fhe-encoding-strip>span,.fhe-relin-flow>span,.fhe-level-ladder>span,.fhe-refresh-loop>span{padding:11px 10px;border:1px solid #688273;border-radius:8px;background:#20382f;color:#c4d2c6;font-size:10px}.fhe-encoding-strip b,.fhe-relin-flow b,.fhe-level-ladder small,.fhe-refresh-loop b{display:inline-block;margin-top:5px;color:#f0e0b9;font-size:12px}
+.fhe-relin-flow,.fhe-level-ladder,.fhe-refresh-loop{gap:10px}.fhe-relin-flow>span,.fhe-level-ladder>span,.fhe-refresh-loop>span{min-width:100px}.fhe-refresh-loop{position:relative}.fhe-refresh-loop em{position:absolute;top:4px;right:14px;color:#a5e5ca;font-size:19px;font-style:normal;animation:guide-spin 8s linear infinite}
+.fhe-worked-steps li{padding-left:5px}.fhe-worked-steps strong{color:#2d4938}
+@media(max-width:1000px){.fhe-guide-layout .fhe-chapter-nav>a{font-size:8px}}
+@media(max-width:760px){.fhe-guide-layout>aside{position:static}.fhe-guide-layout .article-toc{max-height:none}.fhe-guide-layout .fhe-chapter-nav{max-height:48vh}.fhe-key-diagram,.fhe-transform-diagram,.fhe-encoding-strip,.fhe-relin-flow,.fhe-level-ladder,.fhe-refresh-loop{flex-wrap:wrap;gap:9px;padding:16px 10px}.fhe-key-owner{min-width:110px}.fhe-key-transfer{flex-direction:row;flex-wrap:wrap;justify-content:center}.fhe-encoding-strip>span,.fhe-relin-flow>span,.fhe-level-ladder>span,.fhe-refresh-loop>span{min-width:95px}}
+@media(max-width:480px){.fhe-guide-layout .fhe-chapter-nav>a{font-size:10px}.fhe-toc-readout{font-size:9px}.fhe-transform-diagram{font-size:10px}.fhe-polynomial{max-width:100%;overflow-wrap:anywhere}.fhe-encoding-strip>i{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.fhe-chapter-nav>a,.fhe-toc-progress span,.fhe-toc-marker{transition:none}.fhe-key-owner,.fhe-key-transfer i,.fhe-coefficients span,.fhe-transform-diagram>b,.fhe-encoding-strip>i,.fhe-relin-flow>i,.fhe-level-ladder>i,.fhe-refresh-loop>i,.fhe-refresh-loop em{animation:none}}
