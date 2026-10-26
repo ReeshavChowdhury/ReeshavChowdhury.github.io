@@ -10,17 +10,19 @@
 @media(max-width:760px){.article-layout{grid-template-columns:1fr;gap:32px;padding-top:25px}.article-layout>aside{position:static}.article-toc{position:static}.article-toc nav{display:grid;grid-template-columns:1fr 1fr;gap:12px}.article-body{font-size:18px}.article-body h2{font-size:28px}.article-header{padding-top:45px}.article-header .lede{font-size:18px}.article-flow{gap:8px}.article-flow>div{padding:14px}.page-intro{padding:45px 0 30px}.writing-card{gap:20px}.project-compact{gap:15px}.research-art{min-height:340px}}
 @media(max-width:480px){.writing-card{grid-template-columns:1fr;gap:18px}.writing-card .writing-aside{grid-column:auto}.writing-card h3{font-size:30px}.project-compact{grid-template-columns:1fr;gap:14px}.project-compact .text-link{grid-column:auto;justify-self:start}.article-header h1{font-size:40px}.article-layout{padding-bottom:40px}.article-toc nav{grid-template-columns:1fr}.article-body .equation{font-size:13px;padding:16px}.article-flow{grid-template-columns:1fr}.article-flow>div{padding:17px}.article-flow .step-number{margin-bottom:5px}.fhe-demo{padding:20px}.demo-inputs{gap:16px}.calc-result{font-size:22px}.article-body ul,.article-body ol{padding-left:21px}.research-motif{padding:25px 18px}.research-motif .math-main{font-size:25px}.page-intro .lede{font-size:17px}}
 
-/* Interactive 3D research illustration and site-wide card depth. */
-.scene-shell{width:100%;position:relative;border-radius:15px;overflow:hidden;background:#ecefe2;border:1px solid #c8d0c1}
-.scene-canvas{display:block;width:100%;height:285px;touch-action:none;cursor:grab;outline-offset:-4px}
-.scene-canvas.is-dragging{cursor:grabbing}
-.scene-caption{display:flex;justify-content:space-between;gap:8px;padding:10px 13px;background:#f2f2e9;border-top:1px solid #c8d0c1;color:#657267;font:10px ui-monospace,monospace}
-.scene-caption b{color:#263c2c;font-weight:600}
-.scene-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0}
-.scene-controls button{border:1px solid #b8c2b3;border-radius:7px;padding:7px 9px;background:#f4f4eb;color:#34463a;font:11px ui-monospace,monospace;cursor:pointer}
-.scene-controls button:hover,.scene-controls button:focus-visible{background:#dfe8d9;border-color:#728d75}
-.scene-controls label{display:flex;align-items:center;gap:8px;color:#536357;font:11px ui-monospace,monospace;margin-left:auto}
-.scene-controls input[type=range]{width:90px;accent-color:#54785a}
-.tilt-card{transform:perspective(1100px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg));transform-style:preserve-3d;transition:transform 170ms ease;will-change:transform}
-@media(max-width:640px){.scene-canvas{height:240px}.scene-caption{font-size:9px}.scene-controls{gap:6px}.scene-controls label{width:100%;margin:4px 0 0}.scene-controls input[type=range]{flex:1}}
-@media(prefers-reduced-motion:reduce){.tilt-card{transform:none!important;transition:none!important;will-change:auto}}
+/* Simple 3D blocks for the FHE flow. */
+.fhe-cube-flow{display:flex;align-items:center;justify-content:space-between;gap:5px;margin:44px 0 36px}
+.fhe-cube-step{display:flex;min-width:0;flex:1;flex-direction:column;align-items:center;gap:17px;border:0;padding:8px 0;background:transparent;color:var(--ink);cursor:pointer;font:inherit}
+.cube3d{position:relative;display:block;width:68px;height:68px;transform-style:preserve-3d;transform:rotateX(-24deg) rotateY(-32deg);transition:transform .2s ease}
+.cube-face{position:absolute;display:grid;place-items:center;border:1px solid #617562;background:#e1e8d8}
+.cube-front{inset:0;transform:translateZ(34px);font:12px ui-monospace,monospace;color:#263c2c}
+.cube-side{width:68px;height:68px;left:34px;top:0;transform:rotateY(90deg);transform-origin:left;background:#bccbb7}
+.cube-top{width:68px;height:68px;left:0;top:-34px;transform:rotateX(90deg);transform-origin:bottom;background:#f0f1e7}
+.fhe-cube-step:hover .cube3d,.fhe-cube-step:focus-visible .cube3d,.fhe-cube-step.is-selected .cube3d{transform:rotateX(-24deg) rotateY(-32deg) translateY(-7px)}
+.fhe-cube-step.is-selected .cube-front{background:#c8edb5}
+.fhe-cube-step:focus-visible{outline:2px solid #54785a;outline-offset:6px;border-radius:6px}
+.cube-label{font-size:12px;color:#445448}
+.fhe-arrow{color:#839080;font-size:18px}
+.research-art .fhe-step-description{min-height:22px;margin:0;text-align:center;color:#536357;font-size:13px}
+@media(max-width:560px){.fhe-cube-flow{gap:2px;margin:38px -8px 30px}.cube3d{width:52px;height:52px}.cube-front{transform:translateZ(26px);font-size:9px}.cube-side{width:52px;height:52px;left:26px}.cube-top{width:52px;height:52px;top:-26px}.fhe-arrow{font-size:13px}.cube-label{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.cube3d{transition:none}}
