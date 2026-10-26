@@ -43,21 +43,3 @@ const articleContents = document.querySelector('.article-toc');
 if (articleContents && window.matchMedia('(max-width: 760px)').matches) {
   articleContents.open = false;
 }
-
-// A short, interactive FHE flow. Each block reveals one step.
-const fheStepDescriptions = {
-  input: 'Start with a plain input x.',
-  encrypt: 'Encrypt x to get Enc(x).',
-  compute: 'Evaluate f on the ciphertext without decrypting it.',
-  result: 'Decrypt Enc(f(x)) to obtain f(x).',
-};
-for (const button of document.querySelectorAll('[data-fhe-step]')) {
-  button.addEventListener('click', () => {
-    for (const step of document.querySelectorAll('[data-fhe-step]')) {
-      const selected = step === button;
-      step.setAttribute('aria-pressed', String(selected));
-      step.classList.toggle('is-selected', selected);
-    }
-    document.querySelector('#fhe-step-description').textContent = fheStepDescriptions[button.dataset.fheStep];
-  });
-}

@@ -10,19 +10,30 @@
 @media(max-width:760px){.article-layout{grid-template-columns:1fr;gap:32px;padding-top:25px}.article-layout>aside{position:static}.article-toc{position:static}.article-toc nav{display:grid;grid-template-columns:1fr 1fr;gap:12px}.article-body{font-size:18px}.article-body h2{font-size:28px}.article-header{padding-top:45px}.article-header .lede{font-size:18px}.article-flow{gap:8px}.article-flow>div{padding:14px}.page-intro{padding:45px 0 30px}.writing-card{gap:20px}.project-compact{gap:15px}.research-art{min-height:340px}}
 @media(max-width:480px){.writing-card{grid-template-columns:1fr;gap:18px}.writing-card .writing-aside{grid-column:auto}.writing-card h3{font-size:30px}.project-compact{grid-template-columns:1fr;gap:14px}.project-compact .text-link{grid-column:auto;justify-self:start}.article-header h1{font-size:40px}.article-layout{padding-bottom:40px}.article-toc nav{grid-template-columns:1fr}.article-body .equation{font-size:13px;padding:16px}.article-flow{grid-template-columns:1fr}.article-flow>div{padding:17px}.article-flow .step-number{margin-bottom:5px}.fhe-demo{padding:20px}.demo-inputs{gap:16px}.calc-result{font-size:22px}.article-body ul,.article-body ol{padding-left:21px}.research-motif{padding:25px 18px}.research-motif .math-main{font-size:25px}.page-intro .lede{font-size:17px}}
 
-/* Simple 3D blocks for the FHE flow. */
-.fhe-cube-flow{display:flex;align-items:center;justify-content:space-between;gap:5px;margin:44px 0 36px}
-.fhe-cube-step{display:flex;min-width:0;flex:1;flex-direction:column;align-items:center;gap:17px;border:0;padding:8px 0;background:transparent;color:var(--ink);cursor:pointer;font:inherit}
-.cube3d{position:relative;display:block;width:68px;height:68px;transform-style:preserve-3d;transform:rotateX(-24deg) rotateY(-32deg);transition:transform .2s ease}
-.cube-face{position:absolute;display:grid;place-items:center;border:1px solid #617562;background:#e1e8d8}
-.cube-front{inset:0;transform:translateZ(34px);font:12px ui-monospace,monospace;color:#263c2c}
-.cube-side{width:68px;height:68px;left:34px;top:0;transform:rotateY(90deg);transform-origin:left;background:#bccbb7}
-.cube-top{width:68px;height:68px;left:0;top:-34px;transform:rotateX(90deg);transform-origin:bottom;background:#f0f1e7}
-.fhe-cube-step:hover .cube3d,.fhe-cube-step:focus-visible .cube3d,.fhe-cube-step.is-selected .cube3d{transform:rotateX(-24deg) rotateY(-32deg) translateY(-7px)}
-.fhe-cube-step.is-selected .cube-front{background:#c8edb5}
-.fhe-cube-step:focus-visible{outline:2px solid #54785a;outline-offset:6px;border-radius:6px}
-.cube-label{font-size:12px;color:#445448}
-.fhe-arrow{color:#839080;font-size:18px}
-.research-art .fhe-step-description{min-height:22px;margin:0;text-align:center;color:#536357;font-size:13px}
-@media(max-width:560px){.fhe-cube-flow{gap:2px;margin:38px -8px 30px}.cube3d{width:52px;height:52px}.cube-front{transform:translateZ(26px);font-size:9px}.cube-side{width:52px;height:52px;left:26px}.cube-top{width:52px;height:52px;top:-26px}.fhe-arrow{font-size:13px}.cube-label{font-size:10px}}
-@media(prefers-reduced-motion:reduce){.cube3d{transition:none}}
+/* Cinematic WebGL scene that explains the FHE pipeline. */
+.fhe-visual{position:relative;display:flex;flex-direction:column;justify-content:flex-start;gap:0;min-height:0;padding:20px 20px 15px;overflow:hidden;border:1px solid #263d46;background:radial-gradient(ellipse at 54% 50%,#102731 0%,#0a1822 52%,#07111b 100%);color:#e6f2ee;box-shadow:0 28px 80px rgba(7,17,27,.18)}
+.fhe-visual:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 21% 53%,rgba(109,218,192,.12),transparent 28%),radial-gradient(circle at 80% 40%,rgba(126,157,240,.12),transparent 25%);pointer-events:none}
+.fhe-visual>*{position:relative;z-index:1}
+.fhe-visual-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.fhe-kicker{display:block;color:#a1cbbf;font:10px ui-monospace,monospace;letter-spacing:.14em}
+.fhe-subtitle{display:block;margin-top:6px;color:#e4eee9;font-size:16px;font-weight:550;letter-spacing:-.02em}
+.fhe-motion-button{border:1px solid #38545a;border-radius:999px;padding:6px 10px;background:rgba(15,34,41,.72);color:#c9ddd6;font:10px ui-monospace,monospace;cursor:pointer}
+.fhe-motion-button:hover,.fhe-motion-button:focus-visible{border-color:#8ce4cd;color:#fff}
+.fhe-canvas-wrap{position:relative;width:100%;height:324px;margin:2px 0 0;overflow:hidden}
+#fhe-canvas{display:block;width:100%;height:100%;outline:none;touch-action:none;cursor:grab}
+#fhe-canvas:active{cursor:grabbing}
+.fhe-fallback{position:absolute;inset:45% 0 auto;margin:0;text-align:center;color:#d3ebe3;font:17px ui-monospace,monospace}
+.fhe-stage-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid rgba(149,190,180,.18);border-bottom:1px solid rgba(149,190,180,.18)}
+.fhe-stage-list button{position:relative;display:flex;align-items:center;gap:8px;min-width:0;border:0;padding:12px 8px;background:transparent;text-align:left;color:#82979a;cursor:pointer}
+.fhe-stage-list button:after{content:"";position:absolute;right:8px;bottom:-1px;left:8px;height:2px;background:transparent;transition:background .2s ease}
+.fhe-stage-list button span{font:9px ui-monospace,monospace;color:#70898a}
+.fhe-stage-list button b{overflow:hidden;color:#a8b9b7;font-size:11px;font-weight:550;text-overflow:ellipsis}
+.fhe-stage-list button.is-active:after{background:#8ce4cd}
+.fhe-stage-list button.is-active span,.fhe-stage-list button.is-active b{color:#e6f2ee}
+.fhe-stage-list button:hover b,.fhe-stage-list button:focus-visible b{color:#fff}
+.fhe-stage-list button:focus-visible{outline:1px solid #8ce4cd;outline-offset:-3px}
+.fhe-stage-caption{min-height:20px;margin:11px 0 5px;color:#c4d5d1;font-size:12px}
+.fhe-visual-bottom{display:flex;justify-content:space-between;gap:12px;margin-top:3px;color:#70888a;font:8px ui-monospace,monospace;letter-spacing:.08em}
+@media(max-width:900px){.fhe-canvas-wrap{height:298px}}
+@media(max-width:640px){.fhe-visual{padding:16px 14px 13px}.fhe-canvas-wrap{height:278px}.fhe-stage-list button{gap:5px;padding:11px 3px}.fhe-stage-list button b{font-size:10px}.fhe-stage-list button span{font-size:8px}.fhe-visual-bottom{font-size:7px}.fhe-stage-caption{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.fhe-stage-list button:after{transition:none}}
