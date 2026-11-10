@@ -1,6 +1,6 @@
 # Reeshav Chowdhury — GitHub Pages
 
-Personal research and writing website focused on AI, privacy, security, blockchain, and fully homomorphic encryption. It links to [Google Scholar](https://scholar.google.com/citations?user=WjMcQ4EAAAAJ&hl=en), hosts detailed explanatory blog posts, and lists open-source work in a separate Projects section. [Veynremote](https://github.com/ReeshavChowdhury/Veynremote) is one application project, not the website’s main theme.
+Personal research and writing website focused on AI, privacy, security, blockchain, and fully homomorphic encryption. The home page pairs an interactive 3D FHE visualization with research notes, Colab notebooks, and software demonstrations. It links to [Google Scholar](https://scholar.google.com/citations?user=WjMcQ4EAAAAJ&hl=en), hosts detailed explanatory blog posts, and lists open-source work in a separate Projects section. [Veynremote](https://github.com/ReeshavChowdhury/Veynremote) is one engineering project, not the website’s main theme.
 
 - Website: https://reeshavchowdhury.github.io/
 - Blog: https://reeshavchowdhury.github.io/blog/

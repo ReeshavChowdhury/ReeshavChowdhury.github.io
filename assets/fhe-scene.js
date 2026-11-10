@@ -6,6 +6,7 @@ const fallback = document.querySelector('#fhe-fallback');
 const stageCaption = document.querySelector('#fhe-stage-caption');
 const pauseButton = document.querySelector('#fhe-motion-toggle');
 const stageButtons = [...document.querySelectorAll('[data-fhe-step]')];
+const progressFill = document.querySelector('.lab-progress span');
 if (!canvas) throw new Error('FHE canvas not found');
 
 const descriptions = [
@@ -252,7 +253,7 @@ try {
   let activeStage = 0;
   let playing = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   controls.autoRotate = playing;
-  pauseButton.textContent = playing ? 'Pause' : 'Play';
+  pauseButton.textContent = playing ? 'Pause motion' : 'Play motion';
   pauseButton.setAttribute('aria-pressed', String(playing));
 
   stageButtons.forEach((button) => button.addEventListener('click', () => {
@@ -263,48 +264,62 @@ try {
       item.classList.toggle('is-active', active);
     });
     stageCaption.textContent = descriptions[activeStage];
+    if (progressFill) progressFill.style.width = `${((activeStage + 1) / stageButtons.length) * 100}%`;
   }));
 
   pauseButton.addEventListener('click', () => {
     playing = !playing;
     controls.autoRotate = playing;
-    pauseButton.textContent = playing ? 'Pause' : 'Play';
+    pauseButton.textContent = playing ? 'Pause motion' : 'Play motion';
     pauseButton.setAttribute('aria-pressed', String(playing));
+    scheduleRender();
   });
 
   const clock = new THREE.Clock();
+  let frameId = 0;
+  let visible = true;
+  const scheduleRender = () => {
+    if (visible && !frameId) frameId = requestAnimationFrame(animate);
+  };
   const animate = () => {
-    requestAnimationFrame(animate);
+    frameId = 0;
+    if (!visible) return;
     const time = clock.getElapsedTime();
     controls.update();
-    if (!playing) {
-      renderer.render(scene, camera);
-      return;
+    if (playing) {
+      nodeCores.forEach((core, index) => {
+        const active = index === activeStage;
+        const pulse = active ? 1 + Math.sin(time * 2.5) * 0.035 : 1;
+        core.scale.setScalar((index === 2 ? 1.12 : 1.32) * pulse);
+        core.position.y = Math.sin(time * 0.65 + index) * 0.035;
+        if (index === 0 || index === 1 || index === 3) core.rotation.y = time * (index === 1 ? 0.18 : 0.11) * (index === 3 ? -1 : 1);
+        if (index === 2) {
+          const [ringA, ringB] = core.userData.rings;
+          ringA.rotation.y = time * 0.17;
+          ringB.rotation.x = -0.55 + Math.sin(time * 0.3) * 0.08;
+        }
+      });
+      packets.forEach((packet, index) => {
+        const distance = (time * 0.095 + index / packets.length) % 1;
+        const segmentFloat = distance * stageCurves.length;
+        const segment = Math.min(stageCurves.length - 1, Math.floor(segmentFloat));
+        const position = stageCurves[segment].getPointAt(segmentFloat - segment);
+        packet.core.position.copy(position);
+        packet.halo.position.copy(position);
+      });
+      dust.rotation.y = time * 0.004;
     }
-    nodeCores.forEach((core, index) => {
-      const active = index === activeStage;
-      const pulse = active ? 1 + Math.sin(time * 2.5) * 0.035 : 1;
-      core.scale.setScalar((index === 2 ? 1.12 : 1.32) * pulse);
-      core.position.y = Math.sin(time * 0.65 + index) * 0.035;
-      if (index === 0 || index === 1 || index === 3) core.rotation.y = time * (index === 1 ? 0.18 : 0.11) * (index === 3 ? -1 : 1);
-      if (index === 2) {
-        const [ringA, ringB] = core.userData.rings;
-        ringA.rotation.y = time * 0.17;
-        ringB.rotation.x = -0.55 + Math.sin(time * 0.3) * 0.08;
-      }
-    });
-    packets.forEach((packet, index) => {
-      const distance = (time * 0.095 + index / packets.length) % 1;
-      const segmentFloat = distance * stageCurves.length;
-      const segment = Math.min(stageCurves.length - 1, Math.floor(segmentFloat));
-      const position = stageCurves[segment].getPointAt(segmentFloat - segment);
-      packet.core.position.copy(position);
-      packet.halo.position.copy(position);
-    });
-    dust.rotation.y = time * 0.004;
     renderer.render(scene, camera);
+    if (playing) scheduleRender();
   };
-  animate();
+  controls.addEventListener('change', scheduleRender);
+  const visibilityObserver = new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    if (visible) scheduleRender();
+    else if (frameId) { cancelAnimationFrame(frameId); frameId = 0; }
+  }, { threshold: 0.01 });
+  visibilityObserver.observe(canvas);
+  scheduleRender();
   fallback.hidden = true;
 } catch (error) {
   console.error('FHE 3D scene could not start:', error);
