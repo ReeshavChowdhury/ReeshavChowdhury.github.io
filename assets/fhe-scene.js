@@ -20,8 +20,8 @@ const descriptions = [
 
 try {
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color('#091711');
-  scene.fog = new THREE.FogExp2('#091711', 0.034);
+  scene.background = new THREE.Color('#101722');
+  scene.fog = new THREE.FogExp2('#101722', 0.034);
 
   const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 70);
   camera.position.set(0, 3.35, 11.6);
@@ -31,7 +31,7 @@ try {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.22;
+  renderer.toneMappingExposure = 1.34;
 
   const controls = new OrbitControls(camera, canvas);
   controls.target.set(0, 0.05, 0);
@@ -43,14 +43,14 @@ try {
   controls.minPolarAngle = 0.92;
   controls.maxPolarAngle = 1.78;
 
-  scene.add(new THREE.HemisphereLight('#d5edda', '#091711', 1.6));
-  const clientLight = new THREE.PointLight('#8ce0ad', 34, 12, 2);
+  scene.add(new THREE.HemisphereLight('#e1ecff', '#111823', 1.9));
+  const clientLight = new THREE.PointLight('#69dfff', 42, 13, 2);
   clientLight.position.set(-3.1, 2.4, 3.3);
   scene.add(clientLight);
-  const serverLight = new THREE.PointLight('#eac88c', 34, 12, 2);
+  const serverLight = new THREE.PointLight('#ffc76f', 40, 13, 2);
   serverLight.position.set(3.2, 2.3, 2.7);
   scene.add(serverLight);
-  const fillLight = new THREE.PointLight('#8cb6f0', 18, 12, 2);
+  const fillLight = new THREE.PointLight('#a89cff', 24, 14, 2);
   fillLight.position.set(0, -0.6, -2.5);
   scene.add(fillLight);
 
@@ -66,11 +66,11 @@ try {
   };
 
   // Quiet ground plane and guide lines give the two machines a shared workspace.
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(18, 11), mat('#10251b', 0.16, 0.88));
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(18, 11), mat('#192231', 0.18, 0.82));
   floor.rotation.x = -Math.PI / 2;
   floor.position.y = -1.28;
   stage.add(floor);
-  const grid = new THREE.GridHelper(17, 28, '#456a4e', '#294632');
+  const grid = new THREE.GridHelper(17, 28, '#7789a3', '#38475b');
   grid.position.y = -1.265;
   grid.material.transparent = true;
   grid.material.opacity = 0.34;
@@ -80,8 +80,8 @@ try {
   const client = new THREE.Group();
   client.position.set(-3.25, -0.05, 0.2);
   stage.add(client);
-  const chassis = mat('#263b30', 0.74, 0.26);
-  const screen = mat('#07140f', 0.38, 0.2, '#143d2a', 0.7);
+  const chassis = mat('#667486', 0.62, 0.3);
+  const screen = mat('#0b1522', 0.32, 0.2, '#162b47', 0.8);
   makeBox(client, [2.05, 1.43, 0.16], [0, 0.37, 0.05], chassis);
   makeBox(client, [1.82, 1.19, 0.025], [0, 0.38, 0.145], screen);
   const screenCanvas = document.createElement('canvas');
@@ -89,20 +89,20 @@ try {
   screenCanvas.height = 300;
   const screenContext = screenCanvas.getContext('2d');
   const drawClientScreen = (showResult = false) => {
-    screenContext.fillStyle = '#10251a';
+    screenContext.fillStyle = '#152338';
     screenContext.fillRect(0, 0, 512, 300);
-    screenContext.fillStyle = '#89b494';
+    screenContext.fillStyle = '#8ecdf2';
     screenContext.font = '18px monospace';
     screenContext.fillText(showResult ? 'DECRYPTED RESULT' : 'CLIENT MESSAGE', 32, 56);
-    screenContext.fillStyle = '#e1f4dc';
+    screenContext.fillStyle = '#edf6ff';
     screenContext.font = '34px monospace';
     screenContext.fillText(showResult ? 'f(m) = 84' : 'm = 42', 32, 128);
-    screenContext.fillStyle = '#547b5c';
+    screenContext.fillStyle = '#58728f';
     screenContext.fillRect(32, 162, 295, 3);
-    screenContext.fillStyle = '#a8c9a5';
+    screenContext.fillStyle = '#bfd4e9';
     screenContext.font = '15px monospace';
     screenContext.fillText(showResult ? 'opened with secret key' : 'ready to encrypt with pk', 32, 205);
-    screenContext.fillStyle = showResult ? '#f0d395' : '#8fe2ae';
+    screenContext.fillStyle = showResult ? '#ffd17a' : '#70e4ff';
     screenContext.beginPath();
     screenContext.arc(451, 45, 9, 0, Math.PI * 2);
     screenContext.fill();
@@ -113,15 +113,15 @@ try {
   const screenDisplay = new THREE.Mesh(new THREE.PlaneGeometry(1.82, 1.19), new THREE.MeshBasicMaterial({ map: screenTexture }));
   screenDisplay.position.set(0, 0.38, 0.17);
   client.add(screenDisplay);
-  const messageDot = new THREE.Mesh(new THREE.SphereGeometry(0.065, 16, 12), mat('#c7f0c8', 0.1, 0.18, '#9af2a1', 1));
+  const messageDot = new THREE.Mesh(new THREE.SphereGeometry(0.065, 16, 12), mat('#b3f3ff', 0.1, 0.18, '#62dfff', 1));
   messageDot.position.set(0.56, 0.69, 0.17);
   client.add(messageDot);
   makeBox(client, [2.3, 0.12, 0.9], [0, -0.43, 0.18], chassis);
-  makeBox(client, [1.95, 0.018, 0.48], [0, -0.355, 0.2], mat('#354c3b', 0.35, 0.52));
+  makeBox(client, [1.95, 0.018, 0.48], [0, -0.355, 0.2], mat('#8795a5', 0.35, 0.52));
   const stand = makeBox(client, [0.3, 0.43, 0.18], [0, -0.79, 0.04], chassis);
   stand.rotation.x = -0.14;
   makeBox(client, [1.15, 0.06, 0.43], [0, -1.0, 0.1], chassis);
-  const clientRing = new THREE.Mesh(new THREE.TorusGeometry(1.36, 0.014, 8, 96), new THREE.MeshBasicMaterial({ color: '#87d8a0', transparent: true, opacity: 0.52 }));
+  const clientRing = new THREE.Mesh(new THREE.TorusGeometry(1.36, 0.014, 8, 96), new THREE.MeshBasicMaterial({ color: '#64dfff', transparent: true, opacity: 0.66 }));
   clientRing.rotation.x = Math.PI / 2;
   clientRing.position.set(0, -1.2, 0.12);
   client.add(clientRing);
@@ -142,12 +142,12 @@ try {
     group.add(tooth);
     return group;
   };
-  const publicKey = makeKey('#9ee6bb');
-  publicKey.position.set(-3.7, 1.45, 0.55);
+  const publicKey = makeKey('#73e3ff');
+  publicKey.position.set(-0.96, 1.36, 0.55);
   publicKey.scale.setScalar(0.74);
   client.add(publicKey);
   const secretKey = makeKey('#e4c58c');
-  secretKey.position.set(-2.36, -0.83, 0.72);
+  secretKey.position.set(0.82, -0.79, 0.72);
   secretKey.scale.setScalar(0.58);
   secretKey.rotation.z = -0.35;
   client.add(secretKey);
@@ -156,41 +156,41 @@ try {
   const server = new THREE.Group();
   server.position.set(3.25, -0.05, 0.12);
   stage.add(server);
-  const rackMat = mat('#27392f', 0.72, 0.3);
-  const rackFace = mat('#14251d', 0.58, 0.32);
+  const rackMat = mat('#566273', 0.72, 0.3);
+  const rackFace = mat('#182333', 0.58, 0.32);
   makeBox(server, [2.05, 2.82, 1.05], [0, 0.1, 0], rackMat);
   makeBox(server, [1.83, 2.56, 0.06], [0, 0.1, 0.55], rackFace);
   const serverUnits = [];
   const leds = [];
   for (let i = 0; i < 3; i += 1) {
     const y = 0.91 - i * 0.78;
-    const unit = makeBox(server, [1.53, 0.58, 0.08], [0, y, 0.61], mat('#263d30', 0.52, 0.4, '#193827', 0.24));
+    const unit = makeBox(server, [1.53, 0.58, 0.08], [0, y, 0.61], mat('#344257', 0.52, 0.4, '#213550', 0.24));
     serverUnits.push(unit);
-    makeBox(server, [0.64, 0.032, 0.015], [-0.31, y + 0.11, 0.66], mat('#71917a', 0.1, 0.6, '#397b4d', 0.7));
-    makeBox(server, [0.44, 0.025, 0.015], [-0.21, y + 0.025, 0.66], mat('#5b7862', 0.1, 0.6, '#284d36', 0.55));
+    makeBox(server, [0.64, 0.032, 0.015], [-0.31, y + 0.11, 0.66], mat('#9cb4d0', 0.1, 0.6, '#4976ab', 0.7));
+    makeBox(server, [0.44, 0.025, 0.015], [-0.21, y + 0.025, 0.66], mat('#6e86a1', 0.1, 0.6, '#38587f', 0.55));
     for (let j = 0; j < 3; j += 1) {
-      const ledMat = new THREE.MeshBasicMaterial({ color: j === 0 ? '#9be0a6' : '#668a70' });
+      const ledMat = new THREE.MeshBasicMaterial({ color: j === 0 ? '#ffc96e' : '#8cb3e2' });
       const led = new THREE.Mesh(new THREE.SphereGeometry(0.035, 10, 8), ledMat);
       led.position.set(0.46 + j * 0.12, y + 0.1, 0.69);
       server.add(led);
       leds.push(led);
     }
   }
-  const evalCore = new THREE.Mesh(new THREE.OctahedronGeometry(0.31, 1), new THREE.MeshStandardMaterial({ color: '#edd09b', metalness: 0.28, roughness: 0.23, emissive: '#bd8e4e', emissiveIntensity: 0.8 }));
+  const evalCore = new THREE.Mesh(new THREE.OctahedronGeometry(0.31, 1), new THREE.MeshStandardMaterial({ color: '#ffe0a3', metalness: 0.28, roughness: 0.23, emissive: '#d68a3d', emissiveIntensity: 1.05 }));
   evalCore.position.set(0, -0.05, 0.76);
   server.add(evalCore);
-  const evalRingA = new THREE.Mesh(new THREE.TorusGeometry(0.48, 0.012, 8, 64), new THREE.MeshBasicMaterial({ color: '#edce91', transparent: true, opacity: 0.85 }));
-  const evalRingB = new THREE.Mesh(new THREE.TorusGeometry(0.61, 0.008, 6, 64), new THREE.MeshBasicMaterial({ color: '#9ad6b0', transparent: true, opacity: 0.5 }));
+  const evalRingA = new THREE.Mesh(new THREE.TorusGeometry(0.48, 0.012, 8, 64), new THREE.MeshBasicMaterial({ color: '#ffd17b', transparent: true, opacity: 0.92 }));
+  const evalRingB = new THREE.Mesh(new THREE.TorusGeometry(0.61, 0.008, 6, 64), new THREE.MeshBasicMaterial({ color: '#6fe5ff', transparent: true, opacity: 0.72 }));
   evalRingA.rotation.x = 0.83;
   evalRingB.rotation.y = 0.72;
   evalCore.add(evalRingA, evalRingB);
-  const serverRing = new THREE.Mesh(new THREE.TorusGeometry(1.35, 0.014, 8, 96), new THREE.MeshBasicMaterial({ color: '#e4bd7d', transparent: true, opacity: 0.48 }));
+  const serverRing = new THREE.Mesh(new THREE.TorusGeometry(1.35, 0.014, 8, 96), new THREE.MeshBasicMaterial({ color: '#ffc76f', transparent: true, opacity: 0.58 }));
   serverRing.rotation.x = Math.PI / 2;
   serverRing.position.set(0, -1.2, 0.12);
   server.add(serverRing);
 
   // The evaluator receives evaluation keys separately from the encrypted message.
-  const evalKeyPacket = makeKey('#eacb88');
+  const evalKeyPacket = makeKey('#ffd17a');
   evalKeyPacket.scale.setScalar(0.42);
   stage.add(evalKeyPacket);
 
@@ -201,9 +201,9 @@ try {
     stage.add(tube, glow);
     return curve;
   };
-  const keyCurve = makeCurve([[-2.14, 1.52, 0.1], [-1.15, 2.12, -0.05], [0, 2.24, -0.15], [1.2, 1.93, -0.05], [2.2, 1.43, 0.25]], '#9ecb9e', '#6fdb9b');
-  const outboundCurve = makeCurve([[-2.12, 0.48, 0.32], [-1.15, 1.18, 0.46], [0, 1.35, 0.25], [1.17, 1.12, 0.44], [2.14, 0.53, 0.45]], '#88d9b0', '#55e3ae');
-  const returnCurve = makeCurve([[2.14, -0.57, 0.44], [1.17, -1.02, 0.32], [0, -1.11, 0.24], [-1.15, -0.94, 0.35], [-2.12, -0.48, 0.32]], '#b4c6ff', '#839ff6');
+  const keyCurve = makeCurve([[-2.14, 1.52, 0.1], [-1.15, 2.12, -0.05], [0, 2.24, -0.15], [1.2, 1.93, -0.05], [2.2, 1.43, 0.25]], '#ffd17a', '#ffb84e');
+  const outboundCurve = makeCurve([[-2.12, 0.48, 0.32], [-1.15, 1.18, 0.46], [0, 1.35, 0.25], [1.17, 1.12, 0.44], [2.14, 0.53, 0.45]], '#63e4ff', '#45cfff');
+  const returnCurve = makeCurve([[2.14, -0.57, 0.44], [1.17, -1.02, 0.32], [0, -1.11, 0.24], [-1.15, -0.94, 0.35], [-2.12, -0.48, 0.32]], '#c0a6ff', '#9a84ff');
 
   const addArrow = (curve, at, color) => {
     const point = curve.getPointAt(at);
@@ -213,20 +213,20 @@ try {
     arrow.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), tangent);
     stage.add(arrow);
   };
-  addArrow(outboundCurve, 0.99, '#a7e9c0');
-  addArrow(returnCurve, 0.99, '#c2d0ff');
+  addArrow(outboundCurve, 0.99, '#8df0ff');
+  addArrow(returnCurve, 0.99, '#d1c2ff');
 
   const packet = new THREE.Group();
-  const packetCore = new THREE.Mesh(new THREE.IcosahedronGeometry(0.22, 1), new THREE.MeshStandardMaterial({ color: '#a7e9c5', metalness: 0.38, roughness: 0.18, emissive: '#4dbb82', emissiveIntensity: 0.8 }));
-  const packetWire = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(0.3, 1)), new THREE.LineBasicMaterial({ color: '#d1ffe1', transparent: true, opacity: 0.86 }));
-  const packetHalo = new THREE.Mesh(new THREE.SphereGeometry(0.39, 20, 16), new THREE.MeshBasicMaterial({ color: '#75e8aa', transparent: true, opacity: 0.09, blending: THREE.AdditiveBlending, depthWrite: false }));
+  const packetCore = new THREE.Mesh(new THREE.IcosahedronGeometry(0.22, 1), new THREE.MeshStandardMaterial({ color: '#a5f4ff', metalness: 0.38, roughness: 0.18, emissive: '#26bada', emissiveIntensity: 1.1 }));
+  const packetWire = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(0.3, 1)), new THREE.LineBasicMaterial({ color: '#e4fbff', transparent: true, opacity: 0.98 }));
+  const packetHalo = new THREE.Mesh(new THREE.SphereGeometry(0.39, 20, 16), new THREE.MeshBasicMaterial({ color: '#60e5ff', transparent: true, opacity: 0.18, blending: THREE.AdditiveBlending, depthWrite: false }));
   packet.add(packetCore, packetWire, packetHalo);
   stage.add(packet);
 
   const resultPacket = new THREE.Group();
-  const resultCore = new THREE.Mesh(new THREE.DodecahedronGeometry(0.2, 0), new THREE.MeshStandardMaterial({ color: '#b8caff', metalness: 0.38, roughness: 0.18, emissive: '#687ee0', emissiveIntensity: 0.75 }));
-  const resultWire = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.DodecahedronGeometry(0.28, 0)), new THREE.LineBasicMaterial({ color: '#d3ddff', transparent: true, opacity: 0.86 }));
-  const resultHalo = new THREE.Mesh(new THREE.SphereGeometry(0.38, 20, 16), new THREE.MeshBasicMaterial({ color: '#879ff0', transparent: true, opacity: 0.11, blending: THREE.AdditiveBlending, depthWrite: false }));
+  const resultCore = new THREE.Mesh(new THREE.DodecahedronGeometry(0.2, 0), new THREE.MeshStandardMaterial({ color: '#d4c7ff', metalness: 0.38, roughness: 0.18, emissive: '#8870ee', emissiveIntensity: 1 }));
+  const resultWire = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.DodecahedronGeometry(0.28, 0)), new THREE.LineBasicMaterial({ color: '#f1ecff', transparent: true, opacity: 0.98 }));
+  const resultHalo = new THREE.Mesh(new THREE.SphereGeometry(0.38, 20, 16), new THREE.MeshBasicMaterial({ color: '#a897ff', transparent: true, opacity: 0.19, blending: THREE.AdditiveBlending, depthWrite: false }));
   resultPacket.add(resultCore, resultWire, resultHalo);
   stage.add(resultPacket);
   evalKeyPacket.position.copy(keyCurve.getPointAt(0));
@@ -243,7 +243,7 @@ try {
   }
   const dustGeometry = new THREE.BufferGeometry();
   dustGeometry.setAttribute('position', new THREE.BufferAttribute(dustPositions, 3));
-  const dust = new THREE.Points(dustGeometry, new THREE.PointsMaterial({ color: '#b8d6bc', size: 0.018, transparent: true, opacity: 0.32, sizeAttenuation: true }));
+  const dust = new THREE.Points(dustGeometry, new THREE.PointsMaterial({ color: '#bfd5f5', size: 0.018, transparent: true, opacity: 0.29, sizeAttenuation: true }));
   stage.add(dust);
 
   const resize = () => {
@@ -252,8 +252,8 @@ try {
     renderer.setSize(bounds.width, bounds.height, false);
     camera.aspect = bounds.width / bounds.height;
     const compact = window.innerWidth < 640;
-    stage.scale.setScalar(compact ? 0.8 : window.innerWidth < 900 ? 0.9 : 1);
-    camera.position.set(0, compact ? 3.15 : 3.35, compact ? 12.6 : 11.6);
+    stage.scale.setScalar(compact ? 0.76 : window.innerWidth < 900 ? 0.9 : 1);
+    camera.position.set(0, compact ? 3.05 : 3.15, compact ? 10.8 : 9.6);
     camera.updateProjectionMatrix();
   };
   new ResizeObserver(resize).observe(canvas);
@@ -316,7 +316,7 @@ try {
       evalRingA.rotation.z = time * 0.8;
       evalRingB.rotation.x = 0.72 + Math.sin(time * 0.5) * 0.1;
       serverLight.intensity = computing ? 44 + Math.sin(time * 8) * 10 : 25;
-      leds.forEach((led, index) => { led.material.color.set(computing && index % 3 === Math.floor((time * 5) % 3) ? '#f1d28c' : index % 3 === 0 ? '#9be0a6' : '#668a70'); });
+      leds.forEach((led, index) => { led.material.color.set(computing && index % 3 === Math.floor((time * 5) % 3) ? '#fff0bd' : index % 3 === 0 ? '#ffc96e' : '#8cb3e2'); });
 
       // The returned object is still ciphertext until the client decrypts it.
       const returning = smooth((cycle - 7.18) / 2.25);
