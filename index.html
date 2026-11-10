@@ -37,9 +37,15 @@
         <div class="lab-3d-wrap">
           <canvas id="fhe-canvas" aria-label="Animated 3D view: the client creates keys, encrypts a message, sends ciphertext to a server for evaluation, receives an encrypted result, then decrypts it locally. Drag to orbit the view."></canvas>
           <p class="fhe-fallback" id="fhe-fallback">Client: m → Encₚₖ(m) → Server: Eval(f) → Encₚₖ(f(m)) → Client: Decₛₖ</p>
-          <div class="flow-system-labels" aria-hidden="true"><div class="flow-system client-system"><b>CLIENT DEVICE</b><span>message + public key</span><small>secret key stays here</small></div><div class="flow-system server-system"><b>COMPUTE SERVER</b><span>evaluation keys</span><small>never sees plaintext</small></div></div>
-          <div class="flow-key-note" aria-hidden="true"><span class="key-mark">⌁</span> Evaluation keys travel to the server <i></i> Secret key stays with you</div>
-          <div class="lab-equation" aria-hidden="true"><span>m</span><i></i><span class="eq-lock">Enc<sub>pk</sub>(m)</span><i></i><span>Eval<sub>f</sub></span><i></i><span class="eq-result">Enc<sub>pk</sub>(f(m))</span><i></i><span>Dec<sub>sk</sub></span></div>
+          <div class="flow-system-labels" aria-hidden="true"><div class="flow-system client-system"><b>CLIENT DEVICE</b><span>m = 42 · public key pk</span><small>secret key sk stays here</small></div><div class="flow-system server-system"><b>COMPUTE SERVER</b><span>evk · f(m) = 2m</span><small>never sees plaintext</small></div></div>
+          <div class="flow-route-label key-route-label" aria-hidden="true">evk <span>evaluation keys</span></div>
+          <div class="flow-route-label cipher-route-label" aria-hidden="true">c = Enc<sub>pk</sub>(m) <span>ciphertext →</span></div>
+          <div class="flow-route-label result-route-label" aria-hidden="true">← c′ <span>encrypted result</span></div>
+        </div>
+        <div class="math-readout" role="group" aria-labelledby="flow-math-title">
+          <div class="math-readout-head"><span id="flow-math-title">01 / KEY GENERATION</span><span>SCHEME-DEPENDENT NOTATION</span></div>
+          <code id="flow-equation">(pk, sk) ← KeyGen(1<sup>λ</sup>); &nbsp; evk ← EvalKeyGen(sk)</code>
+          <p id="flow-math-note">Use pk to encrypt locally. Send scheme-required evk to the evaluator; keep sk private.</p>
         </div>
         <div class="lab-controls">
           <div class="fhe-stage-list" role="group" aria-label="Explore the encrypted computation flow">

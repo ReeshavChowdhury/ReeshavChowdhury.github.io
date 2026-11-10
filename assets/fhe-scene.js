@@ -11,11 +11,18 @@ const lab = document.querySelector('.hero-lab');
 if (!canvas) throw new Error('FHE canvas not found');
 
 const descriptions = [
-  'The client creates a key pair. The secret key stays on this device.',
-  'The client encrypts message m with the public key: Encₚₖ(m).',
-  'The server evaluates f over ciphertext, using evaluation keys. It never decrypts m.',
-  'The server sends back Encₚₖ(f(m)); the result is still encrypted.',
-  'The client uses its secret key to decrypt the returned result.',
+  'The client creates pk and sk, then derives evaluation keys. Use pk to encrypt locally; share evk, keep sk private.',
+  'The client computes c = Encₚₖ(m). The plaintext m stays local; only ciphertext c is sent.',
+  'The server computes c′ = Evalₑᵥₖ(f, c). It applies f without decrypting c.',
+  'The server returns c′. The result is still encrypted while it travels back.',
+  'The client computes m′ = Decₛₖ(c′). Exact schemes recover the result modulo t; CKKS is approximate.',
+];
+const mathStages = [
+  { title: '01 / KEY GENERATION', equation: '(pk, sk) ← KeyGen(1^λ);   evk ← EvalKeyGen(sk)', note: 'Use pk to encrypt locally. Send scheme-required evk to the evaluator; keep sk private.' },
+  { title: '02 / ENCRYPTION', equation: 'c ← Enc_pk(m)', note: 'Encrypt m with pk; send c, not m. RLWE schemes commonly encode c as polynomial components modulo q.' },
+  { title: '03 / HOMOMORPHIC EVALUATION', equation: 'c′ ← Eval_evk(f, c)', note: 'Apply circuit f using evk. Multiplication depth, rotations, and noise budget depend on the scheme.' },
+  { title: '04 / RETURN CIPHERTEXT', equation: 'server → client: c′', note: 'The returned value c′ is still encrypted; only the key owner can decrypt it.' },
+  { title: '05 / DECRYPTION', equation: 'm′ ← Dec_sk(c′)', note: 'BFV/BGV recover the plaintext result modulo t. CKKS returns an approximate result.' },
 ];
 
 try {
@@ -264,7 +271,12 @@ try {
   let visible = true;
   let frameId = 0;
   let lastScreenResult = false;
+  let phaseOffset = 0;
   const clock = new THREE.Clock();
+  const phaseStarts = [0, 2.68, 5.42, 7.28, 10.32];
+  const mathTitle = document.querySelector('#flow-math-title');
+  const mathEquation = document.querySelector('#flow-equation');
+  const mathNote = document.querySelector('#flow-math-note');
   lab.dataset.activeStage = '0';
   if (progressFill) progressFill.style.width = `${100 / stageButtons.length}%`;
 
@@ -276,8 +288,12 @@ try {
       button.classList.toggle('is-active', active);
     });
     stageCaption.textContent = descriptions[activeStage];
+    mathTitle.textContent = mathStages[activeStage].title;
+    mathEquation.textContent = mathStages[activeStage].equation;
+    mathNote.textContent = mathStages[activeStage].note;
     lab.dataset.activeStage = String(activeStage);
     if (progressFill) progressFill.style.width = `${((activeStage + 1) / stageButtons.length) * 100}%`;
+    phaseOffset = phaseStarts[activeStage] - (clock.getElapsedTime() % 12);
     scheduleRender();
   };
   stageButtons.forEach((button) => button.addEventListener('click', () => setStage(Number(button.dataset.fheStep))));
@@ -289,55 +305,53 @@ try {
     frameId = 0;
     if (!visible) return;
     const time = clock.getElapsedTime();
+    const cycle = ((time + phaseOffset) % 12 + 12) % 12;
     controls.update();
-    if (playing) {
-      const cycle = time % 12;
-      const smooth = (v) => { const n = THREE.MathUtils.clamp(v, 0, 1); return n * n * (3 - 2 * n); };
-      const placeOn = (object, curve, progress) => object.position.copy(curve.getPointAt(THREE.MathUtils.clamp(progress, 0, 1)));
+    const smooth = (v) => { const n = THREE.MathUtils.clamp(v, 0, 1); return n * n * (3 - 2 * n); };
+    const placeOn = (object, curve, progress) => object.position.copy(curve.getPointAt(THREE.MathUtils.clamp(progress, 0, 1)));
 
-      // Evaluation material is provisioned first; the secret key never enters this route.
-      const keyProgress = smooth(cycle / 1.9);
-      placeOn(evalKeyPacket, keyCurve, keyProgress);
-      evalKeyPacket.visible = cycle < 2.2;
+    // Evaluation material is provisioned first; the secret key never enters this route.
+    const keyProgress = smooth(cycle / 1.9);
+    placeOn(evalKeyPacket, keyCurve, keyProgress);
+    evalKeyPacket.visible = cycle < 2.2;
 
-      // The message is encrypted locally, then only its ciphertext follows this path.
-      const outbound = smooth((cycle - 2.55) / 2.35);
-      placeOn(packet, outboundCurve, outbound);
-      packet.visible = cycle >= 2.45 && cycle < 5.25;
-      packet.rotation.x = time * 0.45;
-      packet.rotation.y = time * 0.72;
-      packet.scale.setScalar(0.84 + Math.sin(time * 4) * 0.04);
+    // The message is encrypted locally, then only its ciphertext follows this path.
+    const outbound = smooth((cycle - 2.55) / 2.35);
+    placeOn(packet, outboundCurve, outbound);
+    packet.visible = cycle >= 2.45 && cycle < 5.25;
+    packet.rotation.x = time * 0.45;
+    packet.rotation.y = time * 0.72;
+    packet.scale.setScalar(0.84 + Math.sin(time * 4) * 0.04);
 
-      // The server's evaluation core lights up while it computes over ciphertext.
-      const computing = cycle >= 5.25 && cycle < 7.15;
-      const computePulse = computing ? 1 + Math.sin(time * 8) * 0.12 : 0.83;
-      evalCore.scale.setScalar(computePulse);
-      evalCore.rotation.y = time * (computing ? 0.9 : 0.16);
-      evalRingA.rotation.z = time * 0.8;
-      evalRingB.rotation.x = 0.72 + Math.sin(time * 0.5) * 0.1;
-      serverLight.intensity = computing ? 44 + Math.sin(time * 8) * 10 : 25;
-      leds.forEach((led, index) => { led.material.color.set(computing && index % 3 === Math.floor((time * 5) % 3) ? '#fff0bd' : index % 3 === 0 ? '#ffc96e' : '#8cb3e2'); });
+    // The server's evaluation core lights up while it computes over ciphertext.
+    const computing = cycle >= 5.25 && cycle < 7.15;
+    const computePulse = computing ? 1 + Math.sin(time * 8) * 0.12 : 0.83;
+    evalCore.scale.setScalar(computePulse);
+    evalCore.rotation.y = time * (computing ? 0.9 : 0.16);
+    evalRingA.rotation.z = time * 0.8;
+    evalRingB.rotation.x = 0.72 + Math.sin(time * 0.5) * 0.1;
+    serverLight.intensity = computing ? 44 + Math.sin(time * 8) * 10 : 25;
+    leds.forEach((led, index) => { led.material.color.set(computing && index % 3 === Math.floor((time * 5) % 3) ? '#fff0bd' : index % 3 === 0 ? '#ffc96e' : '#8cb3e2'); });
 
-      // The returned object is still ciphertext until the client decrypts it.
-      const returning = smooth((cycle - 7.18) / 2.25);
-      placeOn(resultPacket, returnCurve, returning);
-      resultPacket.visible = cycle >= 7.1 && cycle < 10.15;
-      resultPacket.rotation.x = time * 0.51;
-      resultPacket.rotation.y = -time * 0.68;
-      const decrypted = cycle >= 10.15 && cycle < 11.8;
-      if (decrypted !== lastScreenResult) {
-        drawClientScreen(decrypted);
-        screenTexture.needsUpdate = true;
-        lastScreenResult = decrypted;
-      }
-      messageDot.material.emissiveIntensity = decrypted ? 1.8 : 0.72;
-      clientLight.intensity = decrypted ? 44 : 28;
-      publicKey.rotation.z = Math.sin(time * 0.6) * 0.08;
-      secretKey.rotation.y = Math.sin(time * 0.3) * 0.06;
-      clientRing.material.opacity = decrypted ? 0.9 : 0.48;
-      serverRing.material.opacity = computing ? 0.9 : 0.42;
-      dust.rotation.y = time * 0.012;
+    // The returned object is still ciphertext until the client decrypts it.
+    const returning = smooth((cycle - 7.18) / 2.25);
+    placeOn(resultPacket, returnCurve, returning);
+    resultPacket.visible = cycle >= 7.1 && cycle < 10.15;
+    resultPacket.rotation.x = time * 0.51;
+    resultPacket.rotation.y = -time * 0.68;
+    const decrypted = cycle >= 10.15 && cycle < 11.8;
+    if (decrypted !== lastScreenResult) {
+      drawClientScreen(decrypted);
+      screenTexture.needsUpdate = true;
+      lastScreenResult = decrypted;
     }
+    messageDot.material.emissiveIntensity = decrypted ? 1.8 : 0.72;
+    clientLight.intensity = decrypted ? 44 : 28;
+    publicKey.rotation.z = Math.sin(time * 0.6) * 0.08;
+    secretKey.rotation.y = Math.sin(time * 0.3) * 0.06;
+    clientRing.material.opacity = decrypted ? 0.9 : 0.48;
+    serverRing.material.opacity = computing ? 0.9 : 0.42;
+    dust.rotation.y = time * 0.012;
     renderer.render(scene, camera);
     if (playing) scheduleRender();
   };
@@ -365,4 +379,16 @@ try {
   fallback.textContent = 'Client: m → Encₚₖ(m) → Server: Eval(f) → Encₚₖ(f(m)) → Client: Decₛₖ';
   fallback.hidden = false;
   pauseButton.hidden = true;
+  stageButtons.forEach((button) => button.addEventListener('click', () => {
+    const index = Number(button.dataset.fheStep);
+    stageCaption.textContent = descriptions[index];
+    document.querySelector('#flow-math-title').textContent = mathStages[index].title;
+    document.querySelector('#flow-equation').textContent = mathStages[index].equation;
+    document.querySelector('#flow-math-note').textContent = mathStages[index].note;
+    stageButtons.forEach((item, itemIndex) => {
+      item.setAttribute('aria-pressed', String(itemIndex === index));
+      item.classList.toggle('is-active', itemIndex === index);
+    });
+    if (progressFill) progressFill.style.width = `${((index + 1) / stageButtons.length) * 100}%`;
+  }));
 }
