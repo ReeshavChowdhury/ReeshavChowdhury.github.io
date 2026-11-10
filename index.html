@@ -33,22 +33,25 @@
 
       <div class="hero-lab" aria-label="Interactive 3D explanation of fully homomorphic encryption">
         <div class="lab-topline"><span><i class="live-dot"></i> FIELD STUDY 01</span><span>FULLY HOMOMORPHIC ENCRYPTION</span></div>
-        <div class="lab-heading"><h2>A computation,<br>inside a ciphertext.</h2><p>Follow the data.<br>Choose a stage.</p></div>
+        <div class="lab-heading"><h2>From a message<br>to a private result.</h2><p>See what stays local.<br>See what reaches the server.</p></div>
         <div class="lab-3d-wrap">
-          <canvas id="fhe-canvas" aria-label="Interactive 3D view of input, encryption, evaluation, and encrypted result. Drag to orbit the view."></canvas>
-          <p class="fhe-fallback" id="fhe-fallback">x → Enc(x) → Eval(f) → Enc(f(x))</p>
-          <div class="lab-equation" aria-hidden="true"><span>x</span><i></i><span class="eq-lock">Enc(x)</span><i></i><span>f</span><i></i><span class="eq-result">Enc(f(x))</span></div>
+          <canvas id="fhe-canvas" aria-label="Animated 3D view: the client creates keys, encrypts a message, sends ciphertext to a server for evaluation, receives an encrypted result, then decrypts it locally. Drag to orbit the view."></canvas>
+          <p class="fhe-fallback" id="fhe-fallback">Client: m → Encₚₖ(m) → Server: Eval(f) → Encₚₖ(f(m)) → Client: Decₛₖ</p>
+          <div class="flow-system-labels" aria-hidden="true"><div class="flow-system client-system"><b>CLIENT DEVICE</b><span>message + public key</span><small>secret key stays here</small></div><div class="flow-system server-system"><b>COMPUTE SERVER</b><span>evaluation keys</span><small>never sees plaintext</small></div></div>
+          <div class="flow-key-note" aria-hidden="true"><span class="key-mark">⌁</span> Evaluation keys travel to the server <i></i> Secret key stays with you</div>
+          <div class="lab-equation" aria-hidden="true"><span>m</span><i></i><span class="eq-lock">Enc<sub>pk</sub>(m)</span><i></i><span>Eval<sub>f</sub></span><i></i><span class="eq-result">Enc<sub>pk</sub>(f(m))</span><i></i><span>Dec<sub>sk</sub></span></div>
         </div>
         <div class="lab-controls">
-          <div class="fhe-stage-list" role="group" aria-label="Explore FHE steps">
-            <button type="button" data-fhe-step="0" aria-pressed="true" class="is-active"><span>01</span><b>Input</b></button>
+          <div class="fhe-stage-list" role="group" aria-label="Explore the encrypted computation flow">
+            <button type="button" data-fhe-step="0" aria-pressed="true" class="is-active"><span>01</span><b>Keys</b></button>
             <button type="button" data-fhe-step="1" aria-pressed="false"><span>02</span><b>Encrypt</b></button>
             <button type="button" data-fhe-step="2" aria-pressed="false"><span>03</span><b>Evaluate</b></button>
-            <button type="button" data-fhe-step="3" aria-pressed="false"><span>04</span><b>Result</b></button>
+            <button type="button" data-fhe-step="3" aria-pressed="false"><span>04</span><b>Return</b></button>
+            <button type="button" data-fhe-step="4" aria-pressed="false"><span>05</span><b>Decrypt</b></button>
           </div>
           <button class="fhe-motion-button" id="fhe-motion-toggle" type="button" aria-pressed="true">Pause motion</button>
         </div>
-        <div class="lab-bottomline"><p class="fhe-stage-caption" id="fhe-stage-caption" aria-live="polite">A plain input x enters the system.</p><span>DRAG TO ORBIT</span></div>
+        <div class="lab-bottomline"><p class="fhe-stage-caption" id="fhe-stage-caption" aria-live="polite">The client creates a key pair. The secret key stays on this device.</p><span>CONCEPTUAL FHE FLOW</span></div>
         <div class="lab-progress" aria-hidden="true"><span></span></div>
       </div>
       <div class="hero-index" aria-hidden="true">RC / 2026</div>
